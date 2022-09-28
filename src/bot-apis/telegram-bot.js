@@ -6,13 +6,17 @@ const bot = new TelegramBot(config.telegramBotToken, { polling: true });
 bot.on("message", (msg) => {
     const chatId = msg.chat.id;
 
-    bot.sendMessage(chatId, `Current Group Id: ${msg.chat.id}`);
+    if (msg?.text?.indexOf("room_id") > 0) {
+        bot.sendMessage(chatId, `Current Group Id: ${msg.chat.id}`);
+    }
 });
 
 bot.on("channel_post", (msg) => {
     const chatId = msg.chat.id;
 
-    bot.sendMessage(chatId, `Current Group Id: ${msg.chat.id}`);
+    if (msg?.text?.indexOf("room_id") > 0) {
+        bot.sendMessage(chatId, `Current Group Id: ${msg.chat.id}`);
+    }
 });
 
 export default bot;
