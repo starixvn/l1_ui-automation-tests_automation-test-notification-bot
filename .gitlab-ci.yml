@@ -1,0 +1,7 @@
+variables:
+  PROJECT_NAME: l1-automation-test-notification-bot
+  
+include:
+  - project: "ci/repos-ci/pentagon_l1_automation_test_notification_bot"
+    ref: master
+    file: "gitlab-ci.yml"

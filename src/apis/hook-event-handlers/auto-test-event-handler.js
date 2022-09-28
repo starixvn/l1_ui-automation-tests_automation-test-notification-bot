@@ -1,0 +1,54 @@
+import HookEventHandlerBase from "./hook-event-handler-base";
+import appConfig from "../../configs/app-config";
+
+export default class AutoTestEventHandler extends HookEventHandlerBase {
+    constructor() {
+        const hookEventName = "pipeline";
+        super(hookEventName);
+    }
+
+    async buildAndFormatMessage(hookEvent) {
+        const variables = hookEvent.object_attributes?.variables;
+        const objectAttributes = hookEvent.object_attributes;
+        const noContent = "";
+
+        if (!variables || !objectAttributes) {
+            return noContent;
+        }
+
+        const statusIcon =
+            objectAttributes.status == "success" ? "✅" : objectAttributes.status == "failed" ? "❌" : objectAttributes.status;
+        const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
+        const gameId = parseInt(this.getVariableValue(variables, "GAMEID"));
+        const gameName = await this.getGameName(gameId);
+        const environment = this.getVariableValue(variables, "ENV");
+        const messageItems = [
+            `${statusIcon} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/artifacts/browse)`,
+        ];
+
+        return messageItems.join("\n");
+    }
+
+    getVariableValue(variables, key) {
+        const keyValuePairs = variables.filter((pair) => pair.key == key);
+        if (keyValuePairs.length > 0) {
+            return keyValuePairs[0].value;
+        }
+
+        return "";
+    }
+
+    async getGameName(gameId) {
+        const response = await fetch(appConfig.gameConfigurationUrl);
+        if (response.ok) {
+            const gameConfigs = await response.json();
+            const game = gameConfigs.filter((game) => game.id == gameId);
+
+            if (game.length > 0) {
+                return game[0].name;
+            }
+        }
+
+        return `GameId: ${gameId}`;
+    }
+}

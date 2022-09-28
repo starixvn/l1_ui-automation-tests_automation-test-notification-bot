@@ -1,0 +1,203 @@
+{
+    "object_kind": "note",
+    "event_type": "note",
+    "user": {
+        "id": 50,
+        "name": "Ricky Nguyen",
+        "username": "ricky.nguyen",
+        "avatar_url": "https://secure.gravatar.com/avatar/c126d6a3dabbc1d36a8497aeefc7bf94?s=80&d=identicon",
+        "email": "ricky.nguyen@luminet.vn"
+    },
+    "project_id": 532,
+    "project": {
+        "id": 532,
+        "name": "Test Merge Request",
+        "description": "",
+        "web_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request",
+        "avatar_url": null,
+        "git_ssh_url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+        "git_http_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request.git",
+        "namespace": "Ricky Nguyen",
+        "visibility_level": 0,
+        "path_with_namespace": "ricky.nguyen/test-merge-request",
+        "default_branch": "main",
+        "ci_config_path": "",
+        "homepage": "https://git3.nexdev.net/ricky.nguyen/test-merge-request",
+        "url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+        "ssh_url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+        "http_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request.git"
+    },
+    "object_attributes": {
+        "attachment": null,
+        "author_id": 50,
+        "change_position": {
+            "base_sha": null,
+            "start_sha": null,
+            "head_sha": null,
+            "old_path": null,
+            "new_path": null,
+            "position_type": "text",
+            "old_line": null,
+            "new_line": null,
+            "line_range": null
+        },
+        "commit_id": null,
+        "created_at": "2021-12-01 02:41:41 UTC",
+        "discussion_id": "f39bcfdfd820b8171ce9f4b3092164ae04e0378c",
+        "id": 6219,
+        "line_code": "ce1be0ff4065a6e9415095c95f25f47a633cef2b_2_1",
+        "note": "test comment on code",
+        "noteable_id": 239,
+        "noteable_type": "MergeRequest",
+        "original_position": {
+            "base_sha": "78b25e617f578509a0d35474c04c43fd3e05e285",
+            "start_sha": "78b25e617f578509a0d35474c04c43fd3e05e285",
+            "head_sha": "30af4664524b3c3389e3168a0439fe5b16955afd",
+            "old_path": "file1.txt",
+            "new_path": "file1.txt",
+            "position_type": "text",
+            "old_line": null,
+            "new_line": 1,
+            "line_range": {
+                "start": {
+                    "line_code": "ce1be0ff4065a6e9415095c95f25f47a633cef2b_2_1",
+                    "type": "new",
+                    "old_line": null,
+                    "new_line": 1
+                },
+                "end": {
+                    "line_code": "ce1be0ff4065a6e9415095c95f25f47a633cef2b_2_1",
+                    "type": "new",
+                    "old_line": null,
+                    "new_line": 1
+                }
+            }
+        },
+        "position": {
+            "base_sha": "78b25e617f578509a0d35474c04c43fd3e05e285",
+            "start_sha": "78b25e617f578509a0d35474c04c43fd3e05e285",
+            "head_sha": "cd84252935e2d9c63a167f0568051b2838becb16",
+            "old_path": "file1.txt",
+            "new_path": "file1.txt",
+            "position_type": "text",
+            "old_line": null,
+            "new_line": 1,
+            "line_range": {
+                "start": {
+                    "line_code": "ce1be0ff4065a6e9415095c95f25f47a633cef2b_2_1",
+                    "type": "new",
+                    "old_line": null,
+                    "new_line": 1
+                },
+                "end": {
+                    "line_code": "ce1be0ff4065a6e9415095c95f25f47a633cef2b_2_1",
+                    "type": "new",
+                    "old_line": null,
+                    "new_line": 1
+                }
+            }
+        },
+        "project_id": 532,
+        "resolved_at": null,
+        "resolved_by_id": null,
+        "resolved_by_push": null,
+        "st_diff": null,
+        "system": false,
+        "type": "DiffNote",
+        "updated_at": "2021-12-01 02:41:41 UTC",
+        "updated_by_id": null,
+        "description": "test comment on code",
+        "url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request/-/merge_requests/4#note_6219"
+    },
+    "repository": {
+        "name": "Test Merge Request",
+        "url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+        "description": "",
+        "homepage": "https://git3.nexdev.net/ricky.nguyen/test-merge-request"
+    },
+    "merge_request": {
+        "assignee_id": 50,
+        "author_id": 50,
+        "created_at": "2021-12-01 02:41:02 UTC",
+        "description": "",
+        "head_pipeline_id": null,
+        "id": 239,
+        "iid": 4,
+        "last_edited_at": null,
+        "last_edited_by_id": null,
+        "merge_commit_sha": null,
+        "merge_error": null,
+        "merge_params": {
+            "force_remove_source_branch": "1"
+        },
+        "merge_status": "can_be_merged",
+        "merge_user_id": null,
+        "merge_when_pipeline_succeeds": false,
+        "milestone_id": null,
+        "source_branch": "test-branch-2",
+        "source_project_id": 532,
+        "state_id": 1,
+        "target_branch": "main",
+        "target_project_id": 532,
+        "time_estimate": 0,
+        "title": "Test branch 2",
+        "updated_at": "2021-12-01 02:41:02 UTC",
+        "updated_by_id": null,
+        "url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request/-/merge_requests/4",
+        "source": {
+            "id": 532,
+            "name": "Test Merge Request",
+            "description": "",
+            "web_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request",
+            "avatar_url": null,
+            "git_ssh_url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+            "git_http_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request.git",
+            "namespace": "Ricky Nguyen",
+            "visibility_level": 0,
+            "path_with_namespace": "ricky.nguyen/test-merge-request",
+            "default_branch": "main",
+            "ci_config_path": "",
+            "homepage": "https://git3.nexdev.net/ricky.nguyen/test-merge-request",
+            "url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+            "ssh_url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+            "http_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request.git"
+        },
+        "target": {
+            "id": 532,
+            "name": "Test Merge Request",
+            "description": "",
+            "web_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request",
+            "avatar_url": null,
+            "git_ssh_url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+            "git_http_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request.git",
+            "namespace": "Ricky Nguyen",
+            "visibility_level": 0,
+            "path_with_namespace": "ricky.nguyen/test-merge-request",
+            "default_branch": "main",
+            "ci_config_path": "",
+            "homepage": "https://git3.nexdev.net/ricky.nguyen/test-merge-request",
+            "url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+            "ssh_url": "git@git3.nexdev.net:ricky.nguyen/test-merge-request.git",
+            "http_url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request.git"
+        },
+        "last_commit": {
+            "id": "cd84252935e2d9c63a167f0568051b2838becb16",
+            "message": "chore: update file 2\n",
+            "title": "chore: update file 2",
+            "timestamp": "2021-11-18T13:52:27+07:00",
+            "url": "https://git3.nexdev.net/ricky.nguyen/test-merge-request/-/commit/cd84252935e2d9c63a167f0568051b2838becb16",
+            "author": {
+                "name": "Ricky Nguyen",
+                "email": "ricky.nguyen@starixvn.com"
+            }
+        },
+        "work_in_progress": false,
+        "total_time_spent": 0,
+        "time_change": 0,
+        "human_total_time_spent": null,
+        "human_time_change": null,
+        "human_time_estimate": null,
+        "assignee_ids": [50],
+        "state": "opened"
+    }
+}
