@@ -27,9 +27,9 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const gameId = this.getVariableValue(variables, "GAMEID");
         const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
         const environment = this.getVariableValue(variables, "ENV");
-        const messageItems = [`${statusIcon} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId})`];
+        const messageItems = [`${statusIcon} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
 
-        return messageItems.join("\n");
+        return messageItems.join("\n").replace("_", "-");
     }
 
     getVariableValue(variables, key) {
