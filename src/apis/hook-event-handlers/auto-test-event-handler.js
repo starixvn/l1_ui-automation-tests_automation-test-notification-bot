@@ -1,6 +1,11 @@
 import HookEventHandlerBase from "./hook-event-handler-base";
 import appConfig from "../../configs/app-config";
 
+const icons = {
+    success: "✅",
+    failed: "❌",
+    canceled: "⚠:Cancel",
+};
 export default class AutoTestEventHandler extends HookEventHandlerBase {
     constructor() {
         const hookEventName = "pipeline";
@@ -10,17 +15,17 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
     async buildAndFormatMessage(hookEvent) {
         const variables = hookEvent.object_attributes?.variables;
         const objectAttributes = hookEvent.object_attributes;
+        const status = objectAttributes?.status;
         const noContent = "";
 
-        if (!variables || !objectAttributes) {
+        if (!variables || !objectAttributes || !icons[status]) {
             return noContent;
         }
 
-        const statusIcon =
-            objectAttributes.status == "success" ? "✅" : objectAttributes.status == "failed" ? "❌" : objectAttributes.status;
+        const statusIcon = icons[status];
         const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
-        const gameId = parseInt(this.getVariableValue(variables, "GAMEID"));
-        const gameName = await this.getGameName(gameId);
+        const gameId = this.getVariableValue(variables, "GAMEID");
+        const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
         const environment = this.getVariableValue(variables, "ENV");
         const messageItems = [
             `${statusIcon} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/artifacts/browse)`,
