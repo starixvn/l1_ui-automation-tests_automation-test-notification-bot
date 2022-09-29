@@ -18,7 +18,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const status = objectAttributes?.status;
         const noContent = "";
 
-        if (!variables || !objectAttributes || !icons[status]) {
+        if (!variables || !objectAttributes || !icons[status] || status == "success") {
             return noContent;
         }
 
