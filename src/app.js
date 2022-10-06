@@ -1,6 +1,7 @@
 import express from "express";
 import GitLabHookApi from "./apis/gitlab-hook-api";
 import appConfig from "./configs/app-config";
+import successAutoTestNotificationJob from "./schedule-jobs/success-auto-test-notification-job";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 
 const gitlabHookApi = new GitLabHookApi(app);
 gitlabHookApi.registerRoutes();
+successAutoTestNotificationJob();
 
 app.listen(appConfig.port, () => {
     console.log(`Site is listening at http://localhost:${appConfig.port}`);

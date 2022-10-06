@@ -7,6 +7,7 @@ const icons = {
     canceled: "⚠:Cancel",
 };
 const noContent = "";
+export const successJobs = [];
 
 export default class AutoTestEventHandler extends HookEventHandlerBase {
     constructor() {
@@ -14,12 +15,16 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         super(hookEventName);
     }
 
+    isSuccessJob(status) {
+        return status == "success";
+    }
+
     async buildAndFormatMessage(hookEvent) {
         const variables = hookEvent.object_attributes?.variables;
         const objectAttributes = hookEvent.object_attributes;
         const status = objectAttributes?.status;
 
-        if (!variables || !objectAttributes || !icons[status] || status == "success") {
+        if (!variables || !objectAttributes || !icons[status]) {
             return noContent;
         }
 
@@ -30,6 +35,11 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const environment = this.getVariableValue(variables, "ENV");
 
         if (environment.toUpperCase() != "PROD") {
+            return noContent;
+        }
+
+        if (this.isSuccessJob(status)) {
+            successJobs.push({ environment, gameName, date: new Date() });
             return noContent;
         }
 
@@ -61,3 +71,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         return `GameId: ${gameId}`;
     }
 }
+
+export const shareVariables = {
+    successJob: successJobs,
+};
