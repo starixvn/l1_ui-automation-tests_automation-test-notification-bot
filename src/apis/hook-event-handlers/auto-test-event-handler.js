@@ -6,6 +6,8 @@ const icons = {
     failed: "❌",
     canceled: "⚠:Cancel",
 };
+const noContent = "";
+
 export default class AutoTestEventHandler extends HookEventHandlerBase {
     constructor() {
         const hookEventName = "pipeline";
@@ -16,7 +18,6 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const variables = hookEvent.object_attributes?.variables;
         const objectAttributes = hookEvent.object_attributes;
         const status = objectAttributes?.status;
-        const noContent = "";
 
         if (!variables || !objectAttributes || !icons[status] || status == "success") {
             return noContent;
@@ -27,6 +28,11 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const gameId = this.getVariableValue(variables, "GAMEID");
         const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
         const environment = this.getVariableValue(variables, "ENV");
+
+        if (environment.toUpperCase() != "PROD") {
+            return noContent;
+        }
+
         const messageItems = [`${statusIcon} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
 
         return messageItems.join("\n").replace("_", "-");
