@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Site is running");
+    res.send(`Site is running on ${appConfig.env}`);
 });
 
 const gitlabHookApi = new GitLabHookApi(app);
