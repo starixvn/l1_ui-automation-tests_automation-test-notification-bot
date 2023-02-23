@@ -8,8 +8,8 @@ export default () => {
         let message = "";
         if (successJobs.length > 0) {
             message = "Success Jobs: \n";
-            successJobs.forEach((successJob) => {
-                message += `- ${successJob.gameName} at ${successJob.date.toLocaleString()}\n`;
+            successJobs.forEach((successJob, index) => {
+                message += `${index + 1} - ${successJob.gameName} at ${successJob.date.toUTCString()}\n`;
             });
 
             successJobs.splice(0, successJobs.length);
