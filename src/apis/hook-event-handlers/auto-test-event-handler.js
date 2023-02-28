@@ -39,7 +39,12 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         }
 
         if (this.isSuccessJob(status)) {
-            successJobs.push({ environment, gameName, date: new Date() });
+            successJobs.push({
+                environment,
+                gameName,
+                date: new Date(),
+                jobLink: `[Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`,
+            });
             return noContent;
         }
 
