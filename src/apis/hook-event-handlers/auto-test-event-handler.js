@@ -33,24 +33,38 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const gameId = this.getVariableValue(variables, "GAMEID");
         const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
         const environment = this.getVariableValue(variables, "ENV");
+        const stackName = this.getVariableValue(variables, "STACK_NAME");
+        const mode = this.getVariableValue(variables, "MODE");
 
-        if (environment.toUpperCase() != "PROD") {
+        if (environment.toUpperCase() != "PROD" || mode != "SMOKE") {
             return noContent;
         }
 
         if (this.isSuccessJob(status)) {
-            successJobs.push({
+            this.addSuccessJob(gameName, stackName, {
                 environment,
                 gameName,
                 date: new Date(),
                 jobLink: `[Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`,
+                stackName
             });
+            
             return noContent;
         }
 
-        const messageItems = [`${statusIcon} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
+        const messageItems = [`${statusIcon} - ${stackName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
 
         return messageItems.join("\n").replace("_", "-");
+    }
+
+    addSuccessJob(gameName, stackName, successObject){
+        const existingObject = successJobs.find(job => job.gameName === gameName && job.stackName === stackName);
+        if(existingObject){
+            Object.assign(existingObject, successObject);
+        }
+        else{
+            successJobs.push(successObject);
+        }
     }
 
     getVariableValue(variables, key) {
