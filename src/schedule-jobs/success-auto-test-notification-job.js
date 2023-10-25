@@ -9,6 +9,7 @@ export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, function () {
         sendMessageByStack("l1", successJobs);
         sendMessageByStack("l2", successJobs);
+        sendMessageByStack("ultra888", successJobs);
         successJobs.splice(0, successJobs.length);       
     });
 };
