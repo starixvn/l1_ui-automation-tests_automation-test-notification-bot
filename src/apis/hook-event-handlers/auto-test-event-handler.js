@@ -87,11 +87,11 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
                     return game[0].name;
                 }
             } 
+            return `GameId: ${gameId}`;
         }
-        else{
+        else {
             return "TaiSaba"
         }
-        return `GameId: ${gameId}`;
     }
 }
 
