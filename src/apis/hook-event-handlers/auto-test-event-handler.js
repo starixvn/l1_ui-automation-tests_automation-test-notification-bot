@@ -78,15 +78,19 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
     async getGameName(gameId) {
         const response = await fetch(appConfig.gameConfigurationUrl);
-        if (response.ok) {
-            const gameConfigs = await response.json();
-            const game = gameConfigs.filter((game) => game.id == gameId);
-
-            if (game.length > 0) {
-                return game[0].name;
-            }
+        if (gameId!= 0) {
+            if (response.ok) {
+                const gameConfigs = await response.json();
+                const game = gameConfigs.filter((game) => game.id == gameId);
+    
+                if (game.length > 0) {
+                    return game[0].name;
+                }
+            } 
         }
-
+        else{
+            return "TaiSaba"
+        }
         return `GameId: ${gameId}`;
     }
 }
