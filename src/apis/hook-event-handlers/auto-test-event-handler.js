@@ -31,9 +31,9 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const statusIcon = icons[status];
         const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
         const gameId = this.getVariableValue(variables, "GAMEID");
-        const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
-        const environment = this.getVariableValue(variables, "ENV");
         const stackName = this.getVariableValue(variables, "STACK_NAME");
+        const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId,stackName);
+        const environment = this.getVariableValue(variables, "ENV");
         const mode = this.getVariableValue(variables, "MODE");
 
         if (environment.toUpperCase() != "PROD" || mode != "SMOKE") {
@@ -76,7 +76,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         return "";
     }
 
-    async getGameName(gameId) {
+    async getGameName(gameId,stackName) {
         const response = await fetch(appConfig.gameConfigurationUrl);
         if (gameId!= 0) {
             if (response.ok) {
@@ -90,7 +90,10 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
             return `GameId: ${gameId}`;
         }
         else {
-            return "TaiSaba"
+            if (stackName == "healthCheck") {
+                return "Download Saba App"
+            }
+            return "GameLobby"
         }
     }
 }
