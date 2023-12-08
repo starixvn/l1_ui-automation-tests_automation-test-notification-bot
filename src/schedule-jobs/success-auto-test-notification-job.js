@@ -10,7 +10,6 @@ export default () => {
         sendMessageByStack("l1", successJobs);
         sendMessageByStack("l2", successJobs);
         sendMessageByStack("ultra888", successJobs);
-        sendMessageByStack("healthCheck", successJobs);
         successJobs.splice(0, successJobs.length);       
     });
 };
