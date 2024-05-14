@@ -51,8 +51,9 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
             
             return noContent;
         }
+        const projectName = stackName === "l1" ? "SG" : stackName === "l2" ? "VG" : stackName === "gn" ? "xD" : "Ultra888";
 
-        const messageItems = [`${statusIcon} - ${stackName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
+        const messageItems = [`${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
 
         return messageItems.join("\n").replace("_", "-");
     }

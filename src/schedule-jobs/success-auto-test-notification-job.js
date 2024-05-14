@@ -10,15 +10,17 @@ export default () => {
         sendMessageByStack("l1", successJobs);
         sendMessageByStack("l2", successJobs);
         sendMessageByStack("ultra888", successJobs);
+        sendMessageByStack("gn", successJobs);
         successJobs.splice(0, successJobs.length);       
     });
 };
 
 const sendMessageByStack = (stackName, successJobs) =>  {
     const successJobsByStack = successJobs.filter(job => job.stackName === stackName);
+    const projectName = stackName === "l1" ? "SG" : stackName === "l2" ? "VG" : stackName === "gn" ? "xD" : "Ultra888";
     if(successJobsByStack.length > 0){
         for (let i = 0; i < successJobsByStack.length; i += BATCH_SIZE) {
-            let message = `Success Jobs - ${stackName} : \n`;
+            let message = `Success Jobs - ${projectName} : \n`;
             const successJobsByBatch = successJobsByStack.slice(i, i + BATCH_SIZE);
             successJobsByBatch.forEach((successJob, index) => {
                 message += `${index + i + 1} - ${successJob.gameName} at ${successJob.date.toUTCString()} - ${successJob.jobLink}\n`;
@@ -28,7 +30,7 @@ const sendMessageByStack = (stackName, successJobs) =>  {
         }             
     }
     else{
-        sendMessageToTelegram(`There is no job running today for ${stackName}`);        
+        sendMessageToTelegram(`There is no job running today for ${projectName}`);        
     }              
 }
 
