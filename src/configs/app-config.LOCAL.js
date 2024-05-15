@@ -5,4 +5,10 @@ export default {
     gameConfigurationUrl: "https://proxy.sabagame.com/game/configurations/",
     successNotificationCron: "0 1 * * *",
     notifySuccessMessageRoomId: "-1001692560363",
+    gameNames: {
+        1001: "BacBall1",
+        1002: "BacBall2",
+        1003: "LuckyNext1",
+        1004: "LuckyNext2",
+    },
 };

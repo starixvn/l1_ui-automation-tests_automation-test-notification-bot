@@ -5,4 +5,10 @@ export default {
     gameConfigurationUrl: "https://l1uatproxy.sgamesuat.com/uat/game/configurations/",
     successNotificationCron: "*/1 * * * *",
     notifySuccessMessageRoomId: "-1001732685909",
+    gameNames: {
+        1001: "BacBall1",
+        1002: "BacBall2",
+        1003: "LuckyNext1",
+        1004: "LuckyNext2",
+    },
 };

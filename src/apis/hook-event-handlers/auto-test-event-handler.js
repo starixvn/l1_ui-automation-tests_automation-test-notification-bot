@@ -46,24 +46,25 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
                 gameName,
                 date: new Date(),
                 jobLink: `[Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`,
-                stackName
+                stackName,
             });
-            
+
             return noContent;
         }
         const projectName = stackName === "l1" ? "SG" : stackName === "l2" ? "VG" : stackName === "gn" ? "xD" : "Ultra888";
 
-        const messageItems = [`${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`];
+        const messageItems = [
+            `${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`,
+        ];
 
         return messageItems.join("\n").replace("_", "-");
     }
 
-    addSuccessJob(gameName, stackName, successObject){
-        const existingObject = successJobs.find(job => job.gameName === gameName && job.stackName === stackName);
-        if(existingObject){
+    addSuccessJob(gameName, stackName, successObject) {
+        const existingObject = successJobs.find((job) => job.gameName === gameName && job.stackName === stackName);
+        if (existingObject) {
             Object.assign(existingObject, successObject);
-        }
-        else{
+        } else {
             successJobs.push(successObject);
         }
     }
@@ -79,19 +80,20 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
     async getGameName(gameId) {
         const response = await fetch(appConfig.gameConfigurationUrl);
-        if (gameId!= 0) {
+        if (gameId != 0) {
             if (response.ok) {
                 const gameConfigs = await response.json();
                 const game = gameConfigs.filter((game) => game.id == gameId);
-    
+
                 if (game.length > 0) {
                     return game[0].name;
+                } else if (appConfig.gameNames[gameId]) {
+                    return appConfig.gameNames[gameId];
                 }
-            } 
+            }
             return `GameId: ${gameId}`;
-        }
-        else {
-            return "GameLobby"
+        } else {
+            return "GameLobby";
         }
     }
 }
