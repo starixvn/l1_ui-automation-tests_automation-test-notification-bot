@@ -36,7 +36,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const environment = this.getVariableValue(variables, "ENV");
         const mode = this.getVariableValue(variables, "MODE");
 
-        if (environment.toUpperCase() != "PROD" || mode != "SMOKE") {
+        if (environment.toUpperCase() != "PROD" || mode != "SMOKE"  || mode != "SMOKEXD") {
             return noContent;
         }
 
