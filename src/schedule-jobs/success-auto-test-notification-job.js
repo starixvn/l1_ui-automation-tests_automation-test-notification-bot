@@ -3,7 +3,7 @@ import appConfig from "../configs/app-config";
 import { successJobs } from "./../apis/hook-event-handlers/auto-test-event-handler";
 import telegramBot from "../bot-apis/telegram-bot";
 
-const BATCH_SIZE = 50;
+const BATCH_SIZE = 100;
 
 export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, function () {
