@@ -10,6 +10,8 @@ export default {
         1002: "BacBall2",
         1003: "LuckyNext1",
         1004: "LuckyNext2",
-        2004: "SIGames",
+        1005: "SeBall",
+        1006: "LuckyThree",
+        2004: "SiGames",
     },
 };
