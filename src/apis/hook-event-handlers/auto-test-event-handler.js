@@ -30,13 +30,14 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
         const statusIcon = icons[status];
         const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
+        const warning = this.getVariableValue(variables, "WARNING");
         const gameId = this.getVariableValue(variables, "GAMEID");
         const stackName = this.getVariableValue(variables, "STACK_NAME");
         const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
         const environment = this.getVariableValue(variables, "ENV");
         const mode = this.getVariableValue(variables, "MODE");
 
-        if (environment.toUpperCase() != "PROD" || (mode != "SMOKE" && mode != "SMOKEXD") ) {
+        if (environment.toUpperCase() != "PROD" || (mode != "SMOKE" && mode != "SMOKEXD")) {
             return noContent;
         }
 
@@ -52,10 +53,11 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
             return noContent;
         }
         const projectName = stackName === "l1" ? "SG" : stackName === "l2" ? "VG" : stackName === "gn" ? "xD" : "SabaPlay";
-
-        const messageItems = [
-            `${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`,
-        ];
+        const messageContent =
+            warning === true
+                ? `❕ Can not login member site - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/) `
+                : `${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`;
+        const messageItems = [messageContent];
 
         return messageItems.join("\n").replace("_", "-");
     }
