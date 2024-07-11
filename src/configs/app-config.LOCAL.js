@@ -1,11 +1,10 @@
 export default {
     env: "LOCAL_0",
-    // telegramBotToken: "5624636359:AAFH7rjW3iviPpJYKKmuNbyfCmfPUpMRJJ0", //main token
-    telegramBotToken: "2088610410:AAFdYvdtV9h2AucxKqhA5oztPMwSBJIcO_s",
+    telegramBotToken: "5624636359:AAFH7rjW3iviPpJYKKmuNbyfCmfPUpMRJJ0", //main token
     port: 5000,
     gameConfigurationUrl: "https://proxy.sabagame.com/game/configurations/",
     successNotificationCron: "0 1 * * *",
-    notifySuccessMessageRoomId: "-793207340", // 1001692560363   793207340
+    notifySuccessMessageRoomId: "-1001692560363", // 1001692560363   793207340
     gameNames: {
         1001: "BacBall1",
         1002: "BacBall2",
