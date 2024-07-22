@@ -3,7 +3,7 @@ import appConfig from "../configs/app-config";
 import { successJobs } from "./../apis/hook-event-handlers/auto-test-event-handler";
 import telegramBot from "../bot-apis/telegram-bot";
 
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 200;
 
 export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, function () {
@@ -11,16 +11,39 @@ export default () => {
         sendMessageByStack("l2", successJobs);
         sendMessageByStack("SabaPlay", successJobs);
         sendMessageByStack("gn", successJobs);
+        sendMessageByStack("l1mobi", successJobs);
+        sendMessageByStack("l1keno", successJobs);
         successJobs.splice(0, successJobs.length);       
     });
 };
 
 const sendMessageByStack = (stackName, successJobs) =>  {
     const successJobsByStack = successJobs.filter(job => job.stackName === stackName);
-    const projectName = stackName === "l1" ? "SG" : stackName === "l2" ? "VG" : stackName === "gn" ? "xD" : "SabaPlay";
+    let projectName;
+    switch (stackName) {
+        case "l1":
+            projectName = "SABA";
+            break;
+        case "l2":
+            projectName = "VG";
+            break;
+        case "gn":
+            projectName = "xD";
+            break;
+        case "l1mobi":
+            projectName = "Saba Mobi";
+            break;  
+        case "l1keno":
+            projectName = "Saba Keno";
+            break;       
+        default:
+            projectName = "Saba Play";
+            break;
+    }
+
     if(successJobsByStack.length > 0){
         for (let i = 0; i < successJobsByStack.length; i += BATCH_SIZE) {
-            let message = `Success Jobs - ${projectName} : \n`;
+            let message = `✅- ${projectName} : \n`;
             const successJobsByBatch = successJobsByStack.slice(i, i + BATCH_SIZE);
             successJobsByBatch.forEach((successJob, index) => {
                 message += `${index + i + 1} - ${successJob.gameName} at ${successJob.date.toUTCString()} - ${successJob.jobLink}\n`;

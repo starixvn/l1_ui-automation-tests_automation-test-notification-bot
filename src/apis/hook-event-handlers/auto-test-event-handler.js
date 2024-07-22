@@ -37,7 +37,9 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const environment = this.getVariableValue(variables, "ENV");
         const mode = this.getVariableValue(variables, "MODE");
 
-        if (environment.toUpperCase() !== "PROD" && environment.toUpperCase() !== "SIT" && mode !== "SMOKE" && mode !== "SMOKEXD") {
+        const excludedModes = ["SMOKE", "SMOKEXD", "SMOKEKENO", "SMOKEMOBI"];
+
+        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode)) {
             return noContent;
         }
 
@@ -52,7 +54,28 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
             return noContent;
         }
-        const projectName = stackName === "l1" ? "SG" : stackName === "l2" ? "VG" : stackName === "gn" ? "xD" : "SabaPlay";
+        let projectName;
+
+        switch (stackName) {
+            case "l1":
+                projectName = "SABA";
+                break;
+            case "l2":
+                projectName = "VG";
+                break;
+            case "gn":
+                projectName = "xD";
+                break;
+            case "l1mobi":
+                projectName = "Saba Mobi";
+                break;
+            case "l1keno":
+                projectName = "Saba Keno";
+                break;
+            default:
+                projectName = "SabaPlay";
+                break;
+        }
         const messageContent =
             warning === true
                 ? `❕ Can not login member site - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/) `
