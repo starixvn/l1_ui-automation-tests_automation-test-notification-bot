@@ -19,31 +19,21 @@ export default () => {
 
 const sendMessageByStack = (stackName, successJobs) =>  {
     const successJobsByStack = successJobs.filter(job => job.stackName === stackName);
-    let projectName;
-    switch (stackName) {
-        case "l1":
-            projectName = "SABA";
-            break;
-        case "l2":
-            projectName = "VG";
-            break;
-        case "gn":
-            projectName = "xD";
-            break;
-        case "l1mobi":
-            projectName = "Saba Mobi";
-            break;  
-        case "l1keno":
-            projectName = "Saba Keno";
-            break;       
-        default:
-            projectName = "Saba Play";
-            break;
-    }
+    const projectNameMap = {
+        l1: "SABA",
+        l2: "VG",
+        gn: "xD",
+        l1mobi: "Saba Mobi",
+        l1keno: "Saba Keno",
+        l2mobi: "VG Mobi",
+        l2keno: "VG Keno",
+      };
+      
+      const projectName = projectNameMap[stackName] || "Saba Play";
 
     if(successJobsByStack.length > 0){
         for (let i = 0; i < successJobsByStack.length; i += BATCH_SIZE) {
-            let message = `✅- ${projectName} : \n`;
+            let message = `✅ - ${projectName} : \n`;
             const successJobsByBatch = successJobsByStack.slice(i, i + BATCH_SIZE);
             successJobsByBatch.forEach((successJob, index) => {
                 message += `${index + i + 1} - ${successJob.gameName} at ${successJob.date.toUTCString()} - ${successJob.jobLink}\n`;

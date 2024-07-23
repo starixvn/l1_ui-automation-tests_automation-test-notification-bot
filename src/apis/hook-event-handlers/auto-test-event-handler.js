@@ -30,6 +30,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
         const statusIcon = icons[status];
         const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
+        const isTest = this.getVariableValue(variables, "TEST");
         const warning = this.getVariableValue(variables, "WARNING");
         const gameId = this.getVariableValue(variables, "GAMEID");
         const stackName = this.getVariableValue(variables, "STACK_NAME");
@@ -39,7 +40,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
         const excludedModes = ["SMOKE", "SMOKEXD", "SMOKEKENO", "SMOKEMOBI"];
 
-        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode)) {
+        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode) && isTest == "true") {
             return noContent;
         }
 
@@ -54,28 +55,18 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
             return noContent;
         }
-        let projectName;
-
-        switch (stackName) {
-            case "l1":
-                projectName = "SABA";
-                break;
-            case "l2":
-                projectName = "VG";
-                break;
-            case "gn":
-                projectName = "xD";
-                break;
-            case "l1mobi":
-                projectName = "Saba Mobi";
-                break;
-            case "l1keno":
-                projectName = "Saba Keno";
-                break;
-            default:
-                projectName = "SabaPlay";
-                break;
-        }
+        const projectNameMap = {
+            l1: "SABA",
+            l2: "VG",
+            gn: "xD",
+            l1mobi: "Saba Mobi",
+            l1keno: "Saba Keno",
+            l2mobi: "VG Mobi",
+            l2keno: "VG Keno",
+          };
+          
+        const projectName = projectNameMap[stackName] || "Saba Play";
+        
         const messageContent =
             warning === true
                 ? `❕ Can not login member site - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/) `
