@@ -31,16 +31,15 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const statusIcon = icons[status];
         const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
         const isTest = this.getVariableValue(variables, "TEST");
-        const warning = this.getVariableValue(variables, "WARNING");
         const gameId = this.getVariableValue(variables, "GAMEID");
         const stackName = this.getVariableValue(variables, "STACK_NAME");
         const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
         const environment = this.getVariableValue(variables, "ENV");
         const mode = this.getVariableValue(variables, "MODE");
 
-        const excludedModes = ["SMOKE", "SMOKEXD", "SMOKEKENO", "SMOKEMOBI"];
+        const excludedModes = ["SMOKE", "SMOKEXD", "SMOKEKENO", "SMOKEMOBI", "SMOKEIS",];
 
-        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode) && isTest == "true") {
+        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode) || isTest == "true") {
             return noContent;
         }
 
@@ -59,18 +58,17 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
             l1: "SABA",
             l2: "VG",
             gn: "xD",
-            l1mobi: "Saba Mobi",
-            l1keno: "Saba Keno",
-            l2mobi: "VG Mobi",
-            l2keno: "VG Keno",
+            l1mobi: "Saba-Mobi",
+            l1keno: "Saba-Keno",
+            l2mobi: "VG-Mobi",
+            l2keno: "VG-Keno",
+            l1is: "Saba-Instant Play",
+            l2is: "VG-Instant Play",
           };
           
         const projectName = projectNameMap[stackName] || "Saba Play";
         
-        const messageContent =
-            warning === true
-                ? `❕ Can not login member site - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/) `
-                : `${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`;
+        const messageContent = `${statusIcon} - ${projectName} - ${environment} - ${gameName} - [Link](${hookEvent.project?.web_url}/-/jobs/${jobId}/)`;
         const messageItems = [messageContent];
 
         return messageItems.join("\n").replace("_", "-");

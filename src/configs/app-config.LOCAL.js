@@ -13,7 +13,6 @@ export default {
         1005: "SeBall",
         1006: "LuckyThree",
         1007: "SicBall",
-        2004: "SiGames",
         2005: "SabaPlay",
     },
 };

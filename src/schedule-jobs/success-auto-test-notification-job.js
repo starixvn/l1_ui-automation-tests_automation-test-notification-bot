@@ -13,6 +13,9 @@ export default () => {
         sendMessageByStack("gn", successJobs);
         sendMessageByStack("l1mobi", successJobs);
         sendMessageByStack("l1keno", successJobs);
+        sendMessageByStack("l2mobi", successJobs);
+        sendMessageByStack("l2keno", successJobs);
+        sendMessageByStack("l1is", successJobs);
         successJobs.splice(0, successJobs.length);       
     });
 };
@@ -23,10 +26,12 @@ const sendMessageByStack = (stackName, successJobs) =>  {
         l1: "SABA",
         l2: "VG",
         gn: "xD",
-        l1mobi: "Saba Mobi",
-        l1keno: "Saba Keno",
-        l2mobi: "VG Mobi",
-        l2keno: "VG Keno",
+        l1mobi: "Saba-Mobi",
+        l1keno: "Saba-Keno",
+        l2mobi: "VG-Mobi",
+        l2keno: "VG-Keno",
+        l1is: "Saba-Instant Play",
+        l2is: "VG-Instant Play",
       };
       
       const projectName = projectNameMap[stackName] || "Saba Play";
