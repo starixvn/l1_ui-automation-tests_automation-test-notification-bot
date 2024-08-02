@@ -30,7 +30,6 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
         const statusIcon = icons[status];
         const jobId = hookEvent?.builds?.length > 0 ? hookEvent?.builds[0].id : 0;
-        const isTest = this.getVariableValue(variables, "TEST");
         const gameId = this.getVariableValue(variables, "GAMEID");
         const stackName = this.getVariableValue(variables, "STACK_NAME");
         const gameName = isNaN(gameId) ? gameId : await this.getGameName(gameId);
@@ -39,7 +38,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
         const excludedModes = ["SMOKE", "SMOKEXD", "SMOKEKENO", "SMOKEMOBI", "SMOKEIS",];
 
-        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode) || isTest == "true") {
+        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode)) {
             return noContent;
         }
 
