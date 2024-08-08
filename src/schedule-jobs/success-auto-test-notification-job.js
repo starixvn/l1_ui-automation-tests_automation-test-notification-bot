@@ -6,22 +6,46 @@ import telegramBot from "../bot-apis/telegram-bot";
 const BATCH_SIZE = 200;
 
 export default () => {
-    schedule.scheduleJob(appConfig.successNotificationCron, function () {
-        sendMessageByStack("l1", successJobs);
-        sendMessageByStack("l2", successJobs);
-        sendMessageByStack("SabaPlay", successJobs);
-        sendMessageByStack("gn", successJobs);
-        sendMessageByStack("l1mobi", successJobs);
-        sendMessageByStack("l1keno", successJobs);
-        sendMessageByStack("l2mobi", successJobs);
-        sendMessageByStack("l2keno", successJobs);
-        sendMessageByStack("l1is", successJobs);
-        successJobs.splice(0, successJobs.length);       
+    schedule.scheduleJob(appConfig.successNotificationCron, async function () {
+        try {
+            const url = await getAllureReport();
+            sendMessageToTelegram("Daily Smoke Tests Report: " + url);
+        } catch (error) {
+            console.error("Error in sending message to Telegram:", error);
+        }
     });
 };
 
-const sendMessageByStack = (stackName, successJobs) =>  {
-    const successJobsByStack = successJobs.filter(job => job.stackName === stackName);
+const sendMessageToTelegram = (message) => {
+    telegramBot.sendMessage(appConfig.notifySuccessMessageRoomId, message, {
+        parse_mode: "Markdown",
+        disable_web_page_preview: true,
+    });
+};
+
+async function getAllureReport() {
+    try {
+        const response = await fetch(`http://10.70.70.120:8080/api/report`, {
+            method: "GET",
+            headers: {
+                Accept: "*/*",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+
+        const jsonData = await response.json();
+        const url = jsonData.map((element) => element.url);
+        return url[0] || "There is no test report for today !";
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+const sendMessageByStack = (stackName, successJobs) => {
+    const successJobsByStack = successJobs.filter((job) => job.stackName === stackName);
     const projectNameMap = {
         l1: "SABA",
         l2: "VG",
@@ -32,29 +56,31 @@ const sendMessageByStack = (stackName, successJobs) =>  {
         l2keno: "VG-Keno",
         l1is: "Saba-Instant Play",
         l2is: "VG-Instant Play",
-      };
-      
-      const projectName = projectNameMap[stackName] || "Saba Play";
+    };
 
-    if(successJobsByStack.length > 0){
+    const projectName = projectNameMap[stackName] || "Saba Play";
+
+    if (successJobsByStack.length > 0) {
         for (let i = 0; i < successJobsByStack.length; i += BATCH_SIZE) {
             let message = `✅ - ${projectName} : \n`;
             const successJobsByBatch = successJobsByStack.slice(i, i + BATCH_SIZE);
             successJobsByBatch.forEach((successJob, index) => {
                 message += `${index + i + 1} - ${successJob.gameName} at ${successJob.date.toUTCString()} - ${successJob.jobLink}\n`;
-            });  
-            
-            sendMessageToTelegram(message);
-        }             
-    }
-    else{
-        sendMessageToTelegram(`There is no job running today for ${projectName}`);        
-    }              
-}
+            });
 
-const sendMessageToTelegram = (message) => {
-    telegramBot.sendMessage(appConfig.notifySuccessMessageRoomId, message, {
-        parse_mode: "Markdown",
-        disable_web_page_preview: true,
-    });
-}
+            sendMessageToTelegram(message);
+        }
+    } else {
+        sendMessageToTelegram(`There is no job running today for ${projectName}`);
+    }
+};
+// sendMessageByStack("l1", successJobs);
+// sendMessageByStack("l2", successJobs);
+// sendMessageByStack("SabaPlay", successJobs);
+// sendMessageByStack("gn", successJobs);
+// sendMessageByStack("l1mobi", successJobs);
+// sendMessageByStack("l1keno", successJobs);
+// sendMessageByStack("l2mobi", successJobs);
+// sendMessageByStack("l2keno", successJobs);
+// sendMessageByStack("l1is", successJobs);
+// successJobs.splice(0, successJobs.length);
