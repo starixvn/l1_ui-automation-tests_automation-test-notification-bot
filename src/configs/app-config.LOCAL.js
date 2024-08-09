@@ -3,7 +3,7 @@ export default {
     telegramBotToken: "5624636359:AAFH7rjW3iviPpJYKKmuNbyfCmfPUpMRJJ0", //main token
     port: 5000,
     gameConfigurationUrl: "https://proxy.sabagame.com/game/configurations/",
-    successNotificationCron: "0 1 * * *",
+    successNotificationCron: "*/10 * * * *",
     notifySuccessMessageRoomId: "-1001692560363", // 1001692560363   793207340
     gameNames: {
         1001: "BacBall1",
