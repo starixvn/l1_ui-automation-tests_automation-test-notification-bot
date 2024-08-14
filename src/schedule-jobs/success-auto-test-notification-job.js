@@ -1,16 +1,36 @@
 import schedule from "node-schedule";
 import appConfig from "../configs/app-config";
-import { successJobs } from "./../apis/hook-event-handlers/auto-test-event-handler";
 import telegramBot from "../bot-apis/telegram-bot";
-
-const BATCH_SIZE = 200;
 
 export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, async function () {
         try {
-            const url = await getAllureReport();
-            sendMessageToTelegram(`Daily Smoke Tests Report: [Link](${url})`);
-            
+            const data = await fetchData();
+            const uuid = data.map((element) => element.uuid);
+            const reportData = {
+                reportSpec: {
+                    path: ["DailySmokeTests"],
+                    executorInfo: {
+                        name: "CICD",
+                        type: "GitLab",
+                        buildName: "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
+                        buildUrl: "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
+                        reportName: "DailySmokeTests",
+                        reportUrl: "reportUrl",
+                    },
+                },
+                results: uuid,
+                deleteResults: true,
+            };
+            let generatedReport = null;
+            if (uuid.length > 0) {
+                generatedReport = await generateReport(reportData);
+                console.log("Report generated:", report);
+            } else {
+                console.log("No Allure Result Found");
+            }
+
+            sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](http://10.70.70.120:8080/allure/reports/${generatedReport.uuid}/)`);
         } catch (error) {
             console.error("Error in sending message to Telegram:", error);
         }
@@ -24,9 +44,10 @@ const sendMessageToTelegram = (message) => {
     });
 };
 
-async function getAllureReport() {
+async function fetchData() {
+    // Use "async function" instead of arrow function
     try {
-        const response = await fetch(`http://10.70.70.120:8080/api/report`, {
+        const response = await fetch(`http://10.70.70.120:8080/api/result`, {
             method: "GET",
             headers: {
                 Accept: "*/*",
@@ -38,50 +59,34 @@ async function getAllureReport() {
         }
 
         const jsonData = await response.json();
-        const url = jsonData.map((element) => element.url);
-        return url[0] || "There is no test report for today !";
+        return jsonData; // Return the JSON data
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
 
-const sendMessageByStack = (stackName, successJobs) => {
-    const successJobsByStack = successJobs.filter((job) => job.stackName === stackName);
-    const projectNameMap = {
-        l1: "SABA",
-        l2: "VG",
-        gn: "xD",
-        l1mobi: "Saba-Mobi",
-        l1keno: "Saba-Keno",
-        l2mobi: "VG-Mobi",
-        l2keno: "VG-Keno",
-        l1is: "Saba-Instant Play",
-        l2is: "VG-Instant Play",
+async function generateReport(reportData) {
+    const url = `http://10.70.70.120:8080/api/report`;
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json", // Expect JSON response for error handling
+        },
+        body: JSON.stringify(reportData),
     };
 
-    const projectName = projectNameMap[stackName] || "Saba Play";
+    try {
+        const response = await fetch(url, options);
 
-    if (successJobsByStack.length > 0) {
-        for (let i = 0; i < successJobsByStack.length; i += BATCH_SIZE) {
-            let message = `✅ - ${projectName} : \n`;
-            const successJobsByBatch = successJobsByStack.slice(i, i + BATCH_SIZE);
-            successJobsByBatch.forEach((successJob, index) => {
-                message += `${index + i + 1} - ${successJob.gameName} at ${successJob.date.toUTCString()} - ${successJob.jobLink}\n`;
-            });
-
-            sendMessageToTelegram(message);
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ message: "Unknown error" }));
+            throw new Error(`Report generation failed: ${errorData.message}`);
         }
-    } else {
-        sendMessageToTelegram(`There is no job running today for ${projectName}`);
+
+        return response.json(); // Get the generated report data (if any)
+    } catch (error) {
+        console.error("Error generating report:", error);
+        throw error; // Re-throw for external handling
     }
-};
-// sendMessageByStack("l1", successJobs);
-// sendMessageByStack("l2", successJobs);
-// sendMessageByStack("SabaPlay", successJobs);
-// sendMessageByStack("gn", successJobs);
-// sendMessageByStack("l1mobi", successJobs);
-// sendMessageByStack("l1keno", successJobs);
-// sendMessageByStack("l2mobi", successJobs);
-// sendMessageByStack("l2keno", successJobs);
-// sendMessageByStack("l1is", successJobs);
-// successJobs.splice(0, successJobs.length);
+}
