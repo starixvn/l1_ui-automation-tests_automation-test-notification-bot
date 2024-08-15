@@ -9,8 +9,27 @@ export default () => {
             console.log(url);
             const results = await getAllureResults();
             console.log(results);
-            await generateReport()
-            console.log('DONE');
+            const uuid = data.map(element => element.uuid);  
+            const reportData = {
+                reportSpec: { 
+                  "path": [
+                    "DailySmokeTests"
+                  ],
+                  "executorInfo": {
+                    "name": "CICD",
+                    "type": "GitLab",
+                    "buildName": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
+                    "buildUrl": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
+                    "reportName": "DailySmokeTests",
+                    "reportUrl": "reportUrl"
+                  }
+                },
+                results: uuid,
+                deleteResults: false
+              };
+
+            const reportuuid =await generateReport(reportData)
+            console.log('DONE',reportuuid.uuid);
 
             // sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](${url})`);
         } catch (error) {
@@ -67,25 +86,8 @@ async function getAllureResults() {
     }
 }
 
-async function generateReport() {
+async function generateReport(reportData) {
     const url = `http://10.70.70.120:8080/api/report`; 
-    const reportData = {
-        reportSpec: { 
-          "path": [
-            "DailySmokeTests"
-          ],
-          "executorInfo": {
-            "name": "CICD",
-            "type": "GitLab",
-            "buildName": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
-            "buildUrl": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
-            "reportName": "DailySmokeTests",
-            "reportUrl": "reportUrl"
-          }
-        },
-        results: uuid,
-        deleteResults: false
-      };
     const options = {
       method: 'POST',
       headers: {
