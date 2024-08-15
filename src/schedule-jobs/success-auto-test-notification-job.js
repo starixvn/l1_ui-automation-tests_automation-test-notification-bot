@@ -6,8 +6,8 @@ export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, async function () {
         try {
             const url = await getAllureReport();
-            console.log(url);
-            sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](${url})`);
+            console.log("url", url);
+            // sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](${url})`);
         } catch (error) {
             console.error("Error in sending message to Telegram:", error);
         }
