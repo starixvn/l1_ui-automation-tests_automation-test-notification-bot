@@ -6,6 +6,8 @@ export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, async function () {
         try {
             const data = await fetchData();
+            console.log(data);
+            
             const uuid = data.map(element => element.uuid);  
             let generatedReport = null; 
             const reportData = {
@@ -28,7 +30,7 @@ export default () => {
 
             if (uuid.length > 0) {
                 generatedReport = await generateReport(reportData);
-                console.log("Report generated:", report);
+                console.log("Report generated:", generatedReport);
             } else {
                 console.log("No Allure Result Found");
             }
