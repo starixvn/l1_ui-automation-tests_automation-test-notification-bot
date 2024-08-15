@@ -36,7 +36,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
         const environment = this.getVariableValue(variables, "ENV");
         const mode = this.getVariableValue(variables, "MODE");
 
-        const excludedModes = ["SMOKE", "SMOKEXD", "SMOKEKENO", "SMOKEMOBI", "SMOKEIS",];
+        const excludedModes = ["SMOKE", "xd", "keno", "mobi", "is",];
 
         if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode)) {
             return noContent;
@@ -54,14 +54,14 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
             return noContent;
         }
         const projectNameMap = {
-            l1: "SABA",
+            l1: "SG",
             l2: "VG",
             gn: "xD",
-            l1mobi: "Saba-Mobi",
-            l1keno: "Saba-Keno",
+            l1mobi: "SG-Mobi",
+            l1keno: "SG-Keno",
             l2mobi: "VG-Mobi",
             l2keno: "VG-Keno",
-            l1is: "Saba-Instant Play",
+            l1is: "SG-Instant Play",
             l2is: "VG-Instant Play",
           };
           
