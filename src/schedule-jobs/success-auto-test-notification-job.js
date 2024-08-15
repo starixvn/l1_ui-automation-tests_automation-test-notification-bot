@@ -7,7 +7,7 @@ export default () => {
         try {
             const url = await getAllureReport();
             console.log("url", url);
-            sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](${url})`);
+            sendMessageToTelegram(`📋 Daily Smoke Tests: ${url}`);
         } catch (error) {
             console.error("Error in sending message to Telegram:", error);
         }
