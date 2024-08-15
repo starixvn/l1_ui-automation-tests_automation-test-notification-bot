@@ -7,30 +7,6 @@ export default () => {
         try {
             const url = await getAllureReport();
             console.log(url);
-            const results = await getAllureResults();
-            console.log(results);
-            const uuid = data.map(element => element.uuid);  
-            const reportData = {
-                reportSpec: { 
-                  "path": [
-                    "DailySmokeTests"
-                  ],
-                  "executorInfo": {
-                    "name": "CICD",
-                    "type": "GitLab",
-                    "buildName": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
-                    "buildUrl": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
-                    "reportName": "DailySmokeTests",
-                    "reportUrl": "reportUrl"
-                  }
-                },
-                results: uuid,
-                deleteResults: false
-              };
-
-            const reportuuid =await generateReport(reportData)
-            console.log('DONE',reportuuid.uuid);
-
             // sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](${url})`);
         } catch (error) {
             console.error("Error in sending message to Telegram:", error);
