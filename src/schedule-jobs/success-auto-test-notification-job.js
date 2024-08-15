@@ -6,7 +6,12 @@ export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, async function () {
         try {
             const url = await getAllureReport();
-            console.log(url);       
+            console.log(url);
+            const results = await getAllureResults();
+            console.log(results);
+            await generateReport()
+            console.log('DONE');
+
             // sendMessageToTelegram(`📋 Daily Smoke Tests: [Link](${url})`);
         } catch (error) {
             console.error("Error in sending message to Telegram:", error);
@@ -41,3 +46,66 @@ async function getAllureReport() {
         console.error("Error fetching data:", error);
     }
 }
+
+async function getAllureResults() {
+    try {
+        const response = await fetch(`http://10.70.70.120:8080/api/result`, {
+            method: "GET",
+            headers: {
+                Accept: "*/*",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+
+        const jsonData = await response.json();
+        return jsonData;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+async function generateReport() {
+    const url = `http://10.70.70.120:8080/api/report`; 
+    const reportData = {
+        reportSpec: { 
+          "path": [
+            "DailySmokeTests"
+          ],
+          "executorInfo": {
+            "name": "CICD",
+            "type": "GitLab",
+            "buildName": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
+            "buildUrl": "https://git3.nexdev.net/l1/ui-automation-tests/automation-tests/-/pipelines",
+            "reportName": "DailySmokeTests",
+            "reportUrl": "reportUrl"
+          }
+        },
+        results: uuid,
+        deleteResults: false
+      };
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json' // Expect JSON response for error handling
+      },
+      body: JSON.stringify(reportData)
+    };
+  
+    try {
+      const response = await fetch(url, options);
+  
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
+        throw new Error(`Report generation failed: ${errorData.message}`);
+      }
+  
+      return response.json(); // Get the generated report data (if any)
+    } catch (error) {
+      console.error("Error generating report:", error);
+      throw error; // Re-throw for external handling
+    }
+  }
