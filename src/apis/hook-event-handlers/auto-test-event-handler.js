@@ -38,7 +38,7 @@ export default class AutoTestEventHandler extends HookEventHandlerBase {
 
         const excludedModes = ["SMOKE", "xd", "keno", "mobi", "is",];
 
-        if (environment.toUpperCase() !== "PROD" && !excludedModes.includes(mode)) {
+        if (environment.toUpperCase() !== "PROD" || !excludedModes.includes(mode)) {
             return noContent;
         }
 
