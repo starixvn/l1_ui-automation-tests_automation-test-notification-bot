@@ -36,9 +36,10 @@ async function getAllureReport() {
 
         const jsonData = await response.json();
         const url = jsonData.map((element) => element.url);
-        return url[0] || "There is no test report for today !";
+        return url[0]
     } catch (error) {
         console.error("Error fetching data:", error);
+        return "http://10.70.70.120:8080/ui/";
     }
 }
 
