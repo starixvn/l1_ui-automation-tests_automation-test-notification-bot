@@ -23,7 +23,7 @@ const sendMessageToTelegram = (message) => {
 
 async function getAllureReport() {
     try {
-        const response = await fetch(`http://10.70.70.120:8080/api/report`, {
+        const response = await fetch(`http://10.10.50.160:8080/api/report`, {
             method: "GET",
             headers: {
                 Accept: "*/*",
@@ -36,16 +36,16 @@ async function getAllureReport() {
 
         const jsonData = await response.json();
         const url = jsonData.map((element) => element.url);
-        return url[0]
+        return url[0];
     } catch (error) {
         console.error("Error fetching data:", error);
-        return "http://10.70.70.120:8080/ui/";
+        return "http://test-reports.lumigame.com:8080/ui/";
     }
 }
 
 async function getAllureResults() {
     try {
-        const response = await fetch(`http://10.70.70.120:8080/api/result`, {
+        const response = await fetch(`http://10.10.50.160:8080/api/result`, {
             method: "GET",
             headers: {
                 Accept: "*/*",
@@ -64,7 +64,7 @@ async function getAllureResults() {
 }
 
 async function generateReport(reportData) {
-    const url = `http://10.70.70.120:8080/api/report`;
+    const url = `http://10.10.50.160:8080/api/report`;
     const options = {
         method: "POST",
         headers: {
