@@ -23,7 +23,7 @@ const sendMessageToTelegram = (message) => {
 
 async function getAllureReport() {
     try {
-        const response = await fetch(`http://10.10.50.160:8080/api/report`, {
+        const response = await fetch(`http://test-reports.lumigame.com:8080/api/report`, {
             method: "GET",
             headers: {
                 Accept: "*/*",
