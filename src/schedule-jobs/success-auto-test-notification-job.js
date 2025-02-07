@@ -5,7 +5,8 @@ import telegramBot from "../bot-apis/telegram-bot";
 export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, async function () {
         try {
-            const url = await getAllureReport();
+            let url = await getAllureReport();
+            url = url.replace("10.10.50.160", "test-reports.lumigame.com");
             console.log("url", url);
             sendMessageToTelegram(`📋 Daily Smoke Tests: ${url}`);
         } catch (error) {
