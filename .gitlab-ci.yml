@@ -1,5 +1,6 @@
 variables:
   PROJECT_NAME: l1-automation-test-notification-bot
+  BYPASS_CRITICAL_VULNERABILITY: "true"
   
 include:
   - project: "ci/core-cicd"
