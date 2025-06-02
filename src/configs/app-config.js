@@ -15,4 +15,9 @@ export default {
         1007: "SicBall",
         2005: "SabaPlay",
     },
+    skynex: {
+        token: "0A40aOc7CtpzjbBSJu8KNWQRoXyjRvf9",
+        baseUrl: "https://bot.nexdev.net/skynex/api/messages/forwardwithtoken",
+        conversationId: "B08GPPK88MS:T08ACMHMMFS:C08TZLB9UEN",
+    },
 };

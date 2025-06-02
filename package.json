@@ -6,16 +6,20 @@
     "license": "MIT",
     "scripts": {
         "dev": "nodemon --es-module-specifier-resolution=node",
-        "start": "node --es-module-specifier-resolution=node ."
+        "start": "node --es-module-specifier-resolution=node .",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
         "express": "^4.17.1",
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.37",
         "node-schedule": "^2.1.0",
-        "node-telegram-bot-api": "^0.54.0"
+        "node-telegram-bot-api": "^0.54.0",
+        "axios": "^1.6.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.15"
-    }
+    },
+    "keywords": ["bot", "automation", "notification", "skynex"],
+    "author": ""
 }

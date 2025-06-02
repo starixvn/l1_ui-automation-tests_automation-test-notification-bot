@@ -1,4 +1,4 @@
-import telegramBot from "../bot-apis/telegram-bot";
+import { defaultSkynexBot } from "../bot-apis/skynex-bot";
 import NoteEventHandler from "./hook-event-handlers/note-event-handler";
 import MergeRequestEventHandler from "./hook-event-handlers/merge-request-event-handler";
 import AutoTestEventHandler from "./hook-event-handlers/auto-test-event-handler";
@@ -42,10 +42,7 @@ export default class GitlabHookApi {
 
     sendTelegramMessage(roomId, message) {
         if (message != null && message != "") {
-            telegramBot.sendMessage(roomId, message, {
-                parse_mode: "Markdown",
-                disable_web_page_preview: true,
-            });
+            defaultSkynexBot.sendMessage(message);
         }
     }
 }

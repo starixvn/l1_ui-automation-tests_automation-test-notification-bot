@@ -2,6 +2,7 @@ import express from "express";
 import GitLabHookApi from "./apis/gitlab-hook-api";
 import appConfig from "./configs/app-config";
 import successAutoTestNotificationJob from "./schedule-jobs/success-auto-test-notification-job";
+import { defaultSkynexBot } from "./bot-apis/skynex-bot";
 
 const app = express();
 
@@ -18,3 +19,5 @@ successAutoTestNotificationJob();
 app.listen(appConfig.port, () => {
     console.log(`Site is listening at http://localhost:${appConfig.port}`);
 });
+
+defaultSkynexBot.sendMessage("✅ Automation Test Bot has been started.");

@@ -1,6 +1,6 @@
 import schedule from "node-schedule";
 import appConfig from "../configs/app-config";
-import telegramBot from "../bot-apis/telegram-bot";
+import { defaultSkynexBot } from "../bot-apis/skynex-bot";
 
 export default () => {
     schedule.scheduleJob(appConfig.successNotificationCron, async function () {
@@ -16,10 +16,7 @@ export default () => {
 };
 
 const sendMessageToTelegram = (message) => {
-    telegramBot.sendMessage(appConfig.notifySuccessMessageRoomId, message, {
-        parse_mode: "Markdown",
-        disable_web_page_preview: true,
-    });
+    defaultSkynexBot.sendMessage(message);
 };
 
 async function getAllureReport() {
